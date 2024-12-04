@@ -5,8 +5,11 @@ import Body from "./components/Body.js";
 import Footer from "./components/Footer.js";
 
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router";
-import AboutUs from "./components/AboutUs.js";
+import { lazy } from "react";
 import Error from "./components/Error.js";
+import ProductDetail from "./components/ProductDetail.js";
+
+const AboutUS = lazy(() => import("./components/AboutUs.js"));
 
 const App = () => {
   return (
@@ -29,7 +32,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/about", // Nested route
-        element: <AboutUs />,
+        element: <AboutUS />,
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetail />,
       },
     ],
     errorElement: <Error />,

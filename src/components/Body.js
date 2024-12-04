@@ -2,6 +2,7 @@ import Shimmer from "./Shimmer.js";
 import useGetProducts from "../hooks/useGetProducts.js";
 import ProductCard from "./ProductCard.js";
 import { useState, useEffect } from "react";
+import { Link } from "react-router";
 
 const Body = () => {
   const products = useGetProducts();
@@ -33,7 +34,7 @@ const Body = () => {
         <div className="flex gap-4 items-center">
           <input
             type="text"
-            className="w-56 h-9 border-[#A6AEBF] border-2"
+            className="w-56 h-10 border-black border-2  rounded-lg"
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e.target.value);
@@ -68,7 +69,11 @@ const Body = () => {
       ) : (
         <div className="flex flex-wrap justify-center">
           {filteredProducts.map((ele, idx) => {
-            return <ProductCard key={idx} productData={ele} />;
+            return (
+              <Link to={`/product/${ele.id}`}>
+                <ProductCard key={idx} productData={ele} />
+              </Link>
+            );
           })}
         </div>
       )}
