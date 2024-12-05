@@ -1,10 +1,15 @@
 import { LOGO_URL } from "../utils/constants.js";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router";
 import useOnline from "../hooks/useOnline.js";
+import { useSelector } from "react-redux";
+import UserContext from "../utils/UserContext.js";
 const Header = () => {
   const [autString, setAuthString] = useState("Login");
   const onlineFlag = useOnline();
+  const items = useSelector((store) => store.cart.items);
+  const { loggedInUser } = useContext(UserContext);
+
   return (
     <>
       <div
@@ -32,10 +37,11 @@ const Header = () => {
           </Link>
           <Link
             className="hover:border-white hover:border-2 px-4 py-2 rounded-lg"
-            to={"/contact"}
+            to={"/cart"}
           >
-            <li>Cart</li>
+            <li>Cart ({items.length} items)</li>
           </Link>
+          <li>{loggedInUser}</li>
         </ul>
         <button
           className="text-white border-2 border-white w-24 h-11 rounded-lg hover:bg-white hover:text-black"

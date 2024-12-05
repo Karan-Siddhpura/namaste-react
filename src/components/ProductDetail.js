@@ -1,10 +1,17 @@
 import React from "react";
 import { useParams } from "react-router";
 import useProductDetail from "../hooks/useProductDetail";
+import { useDispatch } from "react-redux";
+import { addItems } from "../utils/cartSlice";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const product = useProductDetail(id);
+
+  const dispatch = useDispatch();
+  const handleAddToCart = () => {
+    dispatch(addItems(product));
+  };
 
   return (
     <>
@@ -21,7 +28,13 @@ const ProductDetail = () => {
           <p className="text-lg font-semibold text-wrap">
             Rating: - {product?.rating?.rate}
           </p>
-          <p className="text-lg font-semibold">Rs. {product?.price}</p>
+          <p className="text-lg font-semibold">₹ {product?.price}</p>
+          <button
+            className="text-black border-2 border-black p-3 rounded-lg hover:bg-black hover:text-white"
+            onClick={handleAddToCart}
+          >
+            Add to Cart
+          </button>
         </div>
       </div>
     </>

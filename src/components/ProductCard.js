@@ -10,7 +10,7 @@ const ProductCard = (props) => {
       <div className="flex flex-col gap-3">
         <p className="font-semibold">{title}</p>
 
-        <p>Rs. {price}</p>
+        <p>₹ {price}</p>
         <p>Rating : - {rating?.rate}</p>
       </div>
     </div>

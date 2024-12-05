@@ -1,13 +1,15 @@
 import Shimmer from "./Shimmer.js";
 import useGetProducts from "../hooks/useGetProducts.js";
 import ProductCard from "./ProductCard.js";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router";
+import UserContext from "../utils/UserContext.js";
 
 const Body = () => {
   const products = useGetProducts();
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [searchInput, setSearchInput] = useState("");
+  const { loggedInUser, setUserName } = useContext(UserContext);
   useEffect(() => {
     if (products) {
       setFilteredProducts(products);
@@ -34,7 +36,7 @@ const Body = () => {
         <div className="flex gap-4 items-center">
           <input
             type="text"
-            className="w-56 h-10 border-black border-2  rounded-lg"
+            className="w-56 h-10 border-black border-2  rounded-lg p-2"
             value={searchInput}
             onChange={(e) => {
               setSearchInput(e.target.value);
@@ -62,6 +64,15 @@ const Body = () => {
         >
           Reset Filter
         </button>
+        <input
+          type="text"
+          className="w-56 h-10 border-black border-2  rounded-lg p-2"
+          value={loggedInUser}
+          placeholder="Enter your name"
+          onChange={(e) => {
+            setUserName(e.target.value);
+          }}
+        />
       </div>
 
       {filteredProducts?.length === 0 ? (
@@ -70,8 +81,8 @@ const Body = () => {
         <div className="flex flex-wrap justify-center">
           {filteredProducts.map((ele, idx) => {
             return (
-              <Link to={`/product/${ele.id}`}>
-                <ProductCard key={idx} productData={ele} />
+              <Link key={idx} to={`/product/${ele.id}`}>
+                <ProductCard productData={ele} />
               </Link>
             );
           })}
